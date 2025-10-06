@@ -10,52 +10,97 @@ import { defaultResumeData } from "@/resources/constants";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY! });
 
-/* -------------------------------- PROMPT CONSTANTS -------------------------------- */
-
 const SYSTEM_PROMPT = (resumeSchema: object) => `
-You are an ATS-optimized resume & cover letter generator AI.
+You are an **expert ATS Resume Generator** trained to produce keyword-optimized, recruiter-friendly resumes.
 
-Return **VALID JSON ONLY** in this format:
+🎯 GOAL:
+Adapt and rewrite the candidate’s resume so it aligns **>95%** with the job description keywords and implied requirements.
+Integrate every relevant technology, ability, and measurable result naturally into all resume sections.
+The resume must be fully rewritten to perfectly match the job role and company requirements — not just keyword insertion.
+
+⚡ ADAPT TO JOB:
+You must take the provided resume (structure example from defaultResumeData) as a reference.
+Use its formatting, structure, and richness of content (summary, technical skills, experiences, accomplishments, etc.)
+but **rewrite** and **adapt** every part (summary, accomplishments, technologies, and tone)
+to make it a perfect semantic and technical match to the given job description.
+
+────────────────────────────
+OUTPUT:
+Return strictly valid JSON only in this format:
 {
   "resumeData": ResumeDataObject,
   "coverLetter": "string"
 }
 
-The "resumeData" must STRICTLY follow this schema:
+The "resumeData" must follow this schema exactly:
 ${JSON.stringify(resumeSchema, null, 2)}
 
-Guidelines:
-- DO NOT include greetings like "Dear Team" or "Dear Hiring Manager".
-- The cover letter MUST start with: "As an experienced ...".
-- It must be 200–300 words, professional, and keyword-rich.
-- Ensure "resumeData" mirrors key terms from the job description for perfect ATS ranking.
-- All arrays and objects must always exist (even if empty).
-- Maintain correct JSON syntax only — no explanations.
+────────────────────────────
+RULES:
+
+1️⃣ **Keyword Extraction & Reinforcement**
+- Identify ALL keywords and phrases in the job description (explicit + implied).
+- Include technical tools, programming languages, frameworks, methodologies, and soft skills.
+- Use synonyms and equivalents (e.g., React = React.js = ReactJS, PostgreSQL = SQL, Docker = containerization).
+- Maintain natural readability — no keyword stuffing.
+
+2️⃣ **Integration Requirements**
+- Inject keywords across all sections:
+  • summary → 3–5 sentences densely packed with relevant stack & abilities  
+  • technicalSkills → grouped by Frontend, Backend, Cloud, Testing, DevOps, AI  
+  • experiences → rewrite with 10–12 technologies + 2–3 measurable achievements  
+  • accomplishments → must include concrete results (“reduced load time by 35%”, “improved conversion by 40%”)  
+  • education & languages → factual but concise.
+
+3️⃣ **Results & Metrics**
+- Include at least **5+ measurable outcomes** using KPIs, percentages, or impact stats.
+- Show initiative, performance, collaboration, scalability, and innovation.
+
+4️⃣ **Cover Letter**
+- Strictly professional tone (no greetings, no closing lines).
+- 120–180 words.
+- Include 10–12 distinct job-relevant keywords.
+- Clearly explain why this candidate fits this role, referencing technologies and responsibilities from the job posting.
+
+5️⃣ **Quality Standards**
+- Resume must sound confident, technically deep, and tailored for a mid-senior engineer.
+- Never leave placeholders or empty arrays.
+- Output must be **strict JSON only**, no markdown or extra commentary.
 `;
 
 const USER_PROMPT = (params: any) => `
-Generate:
-1️⃣ A professional cover letter for a ${params.role}, starting with "As an experienced ...",
-based on:
+You are rewriting, restructuring, and expanding this candidate’s resume for **perfect alignment with the provided job description**.
+
+────────────────────────────
+👤 Candidate Data (reference resume to adapt):
 ${Object.entries(params)
     .map(([k, v]) => `- ${k}: ${v}`)
     .join("\n")}
-2️⃣ A "resumeData" JSON object that matches the given schema EXACTLY.
-Ensure all arrays exist, and ATS keywords from the job description are included.
-`;
 
-/* -------------------------------- MAIN ROUTE HANDLER -------------------------------- */
+────────────────────────────
+💼 Job Description:
+${params.jobDescription || "N/A"}
+
+────────────────────────────
+TASKS:
+- Analyze every keyword, skill, and qualification from the job description.
+- Compare them to the candidate’s data and **rewrite** the resume accordingly.
+- Modify wording, achievements, and technologies to fully match the company’s needs.
+- Expand and adapt every section (summary, skills, experience, accomplishments) following the format and depth of defaultResumeData.
+- Each experience block must list at least 10+ stack items and 2–3 measurable results.
+- Summary must include at least 8+ core technologies and 3+ soft skills.
+- Ensure smooth, human-like narrative (no repetition, natural flow).
+- Return strictly valid JSON with "resumeData" and "coverLetter".
+`;
 
 export async function POST(req: NextRequest) {
     try {
         await connectDB();
 
-        // 🔐 Authenticate
         const user = await requireAuth(req);
         if (!user)
             return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
 
-        // 🧠 Parse body
         const body = await req.json();
         const {
             fullName,
@@ -73,7 +118,6 @@ export async function POST(req: NextRequest) {
             totalTokens,
         } = body;
 
-        // 🔍 Fetch user record
         const dbUser = await User.findById(user.sub);
         if (!dbUser)
             return NextResponse.json({ message: "User not found" }, { status: 404 });
@@ -84,7 +128,7 @@ export async function POST(req: NextRequest) {
                 { status: 402 }
             );
 
-        /* -------------------- Deduct tokens & record transaction -------------------- */
+        // 💳 Deduct tokens
         dbUser.tokens -= totalTokens;
         await dbUser.save();
 
@@ -93,11 +137,11 @@ export async function POST(req: NextRequest) {
             email: dbUser.email,
             amount: totalTokens,
             type: "spend",
-            description: `AI Resume Generation (${totalTokens} tokens)`,
+            description: `AI Resume Adaptation (${totalTokens} tokens)`,
             createdAt: new Date(),
         });
 
-        /* -------------------- Generate resume and cover letter -------------------- */
+        // 🧠 Build prompts
         const systemPrompt = SYSTEM_PROMPT(defaultResumeData);
         const userPrompt = USER_PROMPT({
             fullName,
@@ -114,9 +158,10 @@ export async function POST(req: NextRequest) {
             jobDescription,
         });
 
+        // 🚀 Generate Resume & Cover Letter
         const completion = await openai.chat.completions.create({
             model: "gpt-4o-mini",
-            temperature: 0.7,
+            temperature: 0.55,
             messages: [
                 { role: "system", content: systemPrompt },
                 { role: "user", content: userPrompt },
@@ -124,10 +169,10 @@ export async function POST(req: NextRequest) {
             response_format: { type: "json_object" },
         });
 
-        const raw = completion.choices[0]?.message?.content;
-        const json = JSON.parse(raw || "{}");
+        const raw = completion.choices[0]?.message?.content || "{}";
+        const json = JSON.parse(raw);
 
-        // 🩹 Ensure array structure validity
+        // 🩹 Normalize experience arrays
         if (json.resumeData?.experiences) {
             json.resumeData.experiences = json.resumeData.experiences.map((exp: any) => ({
                 ...exp,
@@ -144,7 +189,7 @@ export async function POST(req: NextRequest) {
             }));
         }
 
-        /* -------------------- Create AI Order (full schema) -------------------- */
+        // 💾 Save AI Order
         const order = await AiOrder.create({
             userId: dbUser._id,
             email: dbUser.email,
@@ -153,24 +198,23 @@ export async function POST(req: NextRequest) {
             createdAt: new Date(),
         });
 
-        /* -------------------- Send confirmation email -------------------- */
+        // 📧 Email Notification
         await sendEmail(
             dbUser.email,
-            "Your AI Resume is Ready 🚀",
-            `Hi ${fullName || dbUser.name}, your AI-generated resume and cover letter are ready.`,
+            "Your Job-Matched Resume is Ready 🚀",
+            `Hi ${fullName || dbUser.name}, your AI-adapted resume and cover letter have been customized for the provided job description.`,
             `
-        <h2>✅ Your AI Resume & Cover Letter Are Ready!</h2>
-        <p>You’ve successfully spent <b>${totalTokens}</b> tokens for AI resume generation.</p>
-        <p>Role: <b>${role}</b></p>
-        <p>Order ID: <b>${order._id}</b></p>
-        <p>Visit your dashboard to download the PDF and review your new resume.</p>
-      `
+      <h2>✅ Resume Adapted for Job</h2>
+      <p>You’ve successfully spent <b>${totalTokens}</b> tokens for resume rewriting and job adaptation.</p>
+      <p>Position: <b>${role}</b></p>
+      <p>Order ID: <b>${order._id}</b></p>
+      <p>Visit your dashboard to view and download your optimized resume and cover letter.</p>
+    `
         );
 
-        /* -------------------- Response -------------------- */
         return NextResponse.json({
             success: true,
-            message: "Resume generated successfully",
+            message: "Resume adapted and rewritten successfully for job match",
             resumeData: json.resumeData,
             coverLetter: json.coverLetter,
             tokensRemaining: dbUser.tokens,

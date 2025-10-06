@@ -57,6 +57,13 @@ export default function ResumeGenerator() {
             setForm(parsed);
         }
     }, []);
+    const [matchResult, setMatchResult] = useState<null | {
+        matchPercent: number;
+        keywordsMatched: number;
+        totalKeywords: number;
+        softSkillsMatch: number;
+        techMatch: number;
+    }>(null);
 
     const getResumeFileName = (data: any, name?: string) => {
         const fullName = data?.header?.fullName?.replace(/\s+/g, "_") || name || "Resume";
@@ -96,7 +103,7 @@ export default function ResumeGenerator() {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
     const [openCrop, setOpenCrop] = useState(false);
     const fileRef = useRef<HTMLInputElement>(null);
-
+    const [checkLoader, setCheckLoader] = useState(false);
     const handleAvatarUpload = () => fileRef.current?.click();
     const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -328,6 +335,7 @@ export default function ResumeGenerator() {
                     <Textarea
                         minRows={6}
                         value={form.summary}
+                        maxRows={7}
                         placeholder="Example: A passionate full-stack developer with 3+ years of experience..."
                         onChange={(e) => handleChange("summary", e.target.value)}
                     />
@@ -344,6 +352,7 @@ export default function ResumeGenerator() {
                     </h3>
                     <Textarea
                         minRows={6}
+                        maxRows={7}
                         value={form.skills}
                         placeholder="Example: React, Next.js, TypeScript, Node.js, Express..."
                         onChange={(e) => handleChange("skills", e.target.value)}
@@ -361,6 +370,7 @@ export default function ResumeGenerator() {
                     </h3>
                     <Textarea
                         minRows={6}
+                        maxRows={7}
                         value={form.experience}
                         placeholder="Example: Worked at Company X as a Frontend Developer..."
                         onChange={(e) => handleChange("experience", e.target.value)}
@@ -378,6 +388,7 @@ export default function ResumeGenerator() {
                     </h3>
                     <Textarea
                         minRows={6}
+                        maxRows={7}
                         value={form.educationAndLanguages}
                         placeholder="Example: Bachelor’s in Computer Science, University of XYZ..."
                         onChange={(e) => handleChange("educationAndLanguages", e.target.value)}
@@ -397,13 +408,12 @@ export default function ResumeGenerator() {
                     </h3>
                     <Textarea
                         minRows={6}
+                        maxRows={7}
                         value={form.jobDescription}
                         placeholder="Example: Looking for a React Developer with strong backend experience..."
                         onChange={(e) => handleChange("jobDescription", e.target.value)}
                     />
                 </div>
-
-
                 <ButtonUI color="secondary" onClick={handleGenerate} disabled={loading}>
                     {loading
                         ? "Generating..."
@@ -434,7 +444,81 @@ export default function ResumeGenerator() {
                         📄 Download Resume (PDF)
                     </ButtonUI>
                 )}
+                <ButtonUI
+                    color="secondary"
+                    loading={checkLoader}
+                    onClick={async () => {
+                        if (!resumeData || !form.jobDescription) {
+                            showAlert("Please provide both Resume and Job Description first.", "warning");
+                            return;
+                        }
+                        try {
+                            setCheckLoader(true);
+                            const res = await fetch("/api/ai/check-resume-match", {
+                                method: "POST",
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify({
+                                    resumeData,
+                                    jobDescription: form.jobDescription,
+                                    tokensToSpend: 100,
+                                }),
+                            });
 
+                            const data = await res.json();
+                            if (!res.ok) {
+                                showAlert(data.message || "Error analyzing resume", "error");
+                                return;
+                            }
+
+                            setMatchResult(data);
+                            showAlert("Match analysis completed!", "success");
+                        } catch (error) {
+                            console.error("❌ Match check failed:", error);
+                            showAlert("Failed to check match.", "error");
+                        } finally {
+                            setCheckLoader(false);
+                        }
+                    }}
+                >
+                    Check CV & Job (100 Tokens per check)
+                </ButtonUI>
+
+                {matchResult && (
+                    <div className={styles.matchResult}>
+                        <h4>Resume Match Results</h4>
+                        <div className={styles.diagramWrapper}>
+                            <svg width="140" height="140" viewBox="0 0 140 140">
+                                <circle cx="70" cy="70" r="60" stroke="#eee" strokeWidth="10" fill="none"/>
+                                <circle
+                                    cx="70"
+                                    cy="70"
+                                    r="60"
+                                    stroke="#4caf50"
+                                    strokeWidth="10"
+                                    fill="none"
+                                    strokeDasharray={`${(matchResult.matchPercent * 377) / 100} 377`}
+                                    strokeDashoffset="0"
+                                    strokeLinecap="round"
+                                    transform="rotate(-90 70 70)"
+                                />
+                                <text
+                                    x="50%"
+                                    y="50%"
+                                    textAnchor="middle"
+                                    dy=".3em"
+                                    fontSize="22"
+                                    fontWeight="bold"
+                                >
+                                    {matchResult.matchPercent}%
+                                </text>
+                            </svg>
+                        </div>
+
+                        <p><b>Keywords Matched:</b> {matchResult.keywordsMatched}/{matchResult.totalKeywords}</p>
+                        <p><b>Soft Skills:</b> {matchResult.softSkillsMatch}%</p>
+                        <p><b>Tech Stack Alignment:</b> {matchResult.techMatch}%</p>
+                    </div>
+                )}
             </div>
 
             {/* RIGHT COLUMN */}

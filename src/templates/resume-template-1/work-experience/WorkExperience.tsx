@@ -11,7 +11,7 @@ Font.register({
 });
 
 const workStyles = StyleSheet.create({
-    bold: {fontFamily: 'Google Sans', fontWeight: 'bold'},
+    bold: {fontFamily: 'Google Sans', fontWeight: 'bold', textTransform: "capitalize"},
     italic: {fontFamily: 'Google Sans', fontStyle: 'italic'},
     title: {
         fontSize: 12,

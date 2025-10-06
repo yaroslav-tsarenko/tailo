@@ -43,9 +43,9 @@ const AuthButtons: React.FC = () => {
                     <div className={styles.userDetails}>
                         <span className={styles.userName}>{user.name}</span>
                         <div className={styles.userBalance}>
-                            <Tooltip title={`Your's available token balance is ${user.tokens} Tokens`}>
+                            <Tooltip title={`Your available token balance is ${user.tokens?.toLocaleString("de-DE") || 0} Tokens`}>
                                 <p className={styles.balanceText}>
-                                    <MdGeneratingTokens className={styles.tokenIcon}/> {user.tokens ?? 0}
+                                    <MdGeneratingTokens className={styles.tokenIcon}/> {user.tokens?.toLocaleString("de-DE") ?? 0}
                                 </p>
                             </Tooltip>
                             <Link href="/pricing" className={styles.buyLink}>
