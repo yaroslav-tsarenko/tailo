@@ -52,9 +52,9 @@ export default function SignUpPage() {
                     description={t.description}
                     isSubmitting={isSubmitting}
                     fields={[
-                        { name: "name", type: "text", placeholder: t.name },
-                        { name: "email", type: "email", placeholder: t.email },
-                        { name: "password", type: "password", placeholder: t.password }
+                        { name: "name", type: "text", placeholder: t.name, label: "Your Name" },
+                        { name: "email", type: "email", placeholder: t.email, label: "Your Email" },
+                        { name: "password", type: "password", placeholder: t.password, label: "Your Very Strong Password ;)" }
                     ]}
                     submitLabel={t.submit}
                 />

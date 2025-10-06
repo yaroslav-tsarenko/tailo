@@ -10,115 +10,131 @@ import {
 const refundPolicySchema: PageSchema = {
     meta: {
         title: `Refund Policy – ${COMPANY_NAME}`,
-        description: `Clear policy regarding refunds for token-based purchases and downloadable barcode products.`,
+        description: `Learn how ${COMPANY_NAME} handles refunds for token-based AI resume generation purchases. Transparent rules for digital services, instant downloads, and consumer protection.`,
         keywords: [
             "refund policy",
-            "UPC refund",
-            "barcode return",
+            "AI resume refund",
             "token refund",
-            "digital product",
-            COMPANY_NAME?.toLowerCase() || "barcode",
-            "returns"
+            "digital service policy",
+            "resume generator",
+            "instant delivery",
+            COMPANY_NAME?.toLowerCase() || "ai-resume-generator",
+            "returns",
         ],
         canonical: "/refund-policy",
         ogImage: {
             title: `${COMPANY_NAME} – Refund Policy`,
-            description: "Transparent and fair refund policy for UPC and barcode generation services.",
+            description: "Transparent refund and credit policy for token-based AI resume generation services.",
             bg: "#ffffff",
-            color: "#000000"
-        }
+            color: "#000000",
+        },
     },
     blocks: [
         {
             type: "text",
             title: "1. Overview",
             bullets: [
-                "Refunds follow this policy and applicable consumer rights.",
-                "Typical refund processing time: 5–10 business days after approval.",
-                "Refunds are capped at the original payment amount.",
-                "Tokens (credits) already used to download barcodes are non-refundable.",
-                "Tokens are tied to your account and not redeemable for real money.",
-                "Bonus/promotional tokens are non-refundable.",
-                `To request a refund, contact ${COMPANY_EMAIL} with your order details.`
-            ]
+                `This Refund Policy outlines how ${COMPANY_NAME} manages refund requests for token-based purchases and AI-generated resumes.`,
+                "Refunds are subject to the conditions below and applicable consumer laws.",
+                "Average processing time: 5–10 business days after approval.",
+                "Refunds cannot exceed the amount originally paid.",
+                "Tokens already used to generate or download AI resumes are non-refundable.",
+                "Tokens are digital credits, not convertible to real currency.",
+                "Bonus or promotional tokens are non-refundable and non-transferable.",
+                `To request a refund, please contact our support team at ${COMPANY_EMAIL}.`,
+            ],
         },
         {
             type: "text",
             title: "2. Applicability",
-            description: `This policy applies to refunds for purchased tokens and downloadable barcode products from ${COMPANY_NAME}. It does not override your rights under local consumer protection laws.`
+            description: `This policy applies to all users purchasing tokens or premium AI resume features on ${COMPANY_NAME}. It does not affect your rights under applicable consumer protection laws.`,
         },
         {
             type: "text",
             title: "3. Token Types",
             bullets: [
-                "Tokens — internal credits used to purchase barcodes or export formats.",
-                "Unused Tokens — credits not yet spent on any product.",
-                "Used Tokens — credits that have already been redeemed for a download.",
-                "Bonus Tokens — credits given during promotions."
-            ]
+                "**Tokens** — internal credits used to generate resumes or AI content.",
+                "**Unused Tokens** — credits purchased but not yet spent on generation.",
+                "**Used Tokens** — credits already redeemed for AI resume creation or file download.",
+                "**Bonus Tokens** — complimentary credits provided through promotions or loyalty rewards.",
+            ],
         },
         {
             type: "text",
             title: "4. Refund Rules",
             bullets: [
-                "Refund value cannot exceed the initial payment (excluding gateway fees).",
-                "No refunds on used tokens unless the exported barcode is defective.",
-                "Unused tokens may be refunded at purchase value upon request (fees may apply).",
-                "Tokens are non-transferable and tied to your account.",
+                "Refunds cannot exceed your original payment (excluding gateway fees).",
+                "Used tokens are non-refundable once a resume has been generated, downloaded, or exported.",
+                "Unused tokens may be refunded at their purchase value upon request, subject to review.",
+                "Tokens cannot be transferred or exchanged between accounts.",
                 "No refunds for bonus or promotional tokens.",
-                "If you agreed to instant delivery and downloaded content, your legal right to withdraw may no longer apply."
-            ]
+                "If you accessed the AI resume immediately after purchase, you agree to waive the right of withdrawal for digital content delivered instantly.",
+            ],
         },
         {
             type: "text",
             title: "5. Submitting a Refund Request",
-            description: `To submit a request, email ${COMPANY_EMAIL} with:`,
+            description: `To submit a refund request, please email ${COMPANY_EMAIL} and include the following information:`,
             bullets: [
-                "Your order ID.",
-                "Account email.",
-                "Whether your refund is for unused tokens or a faulty product.",
-                "Details and evidence if claiming for a faulty product.",
-                "Preferred refund method."
-            ]
+                "Your order or transaction ID.",
+                "Email associated with your account.",
+                "Specify whether you are requesting a refund for unused tokens or due to an issue with AI output.",
+                "Detailed explanation or evidence (e.g., corrupted file, system error).",
+                "Preferred refund method (same as original payment method).",
+            ],
         },
         {
             type: "text",
             title: "6. Review & Decision",
             bullets: [
-                "We review transaction logs, download activity, and evidence.",
-                "Refunds are usually returned via the original payment method.",
-                "If denied, you’ll receive an explanation with further steps."
-            ]
+                "We will verify your account activity, token usage, and transaction history.",
+                "Refunds are usually processed via the original payment method.",
+                "If a refund is denied, we will provide a clear explanation and available next steps.",
+            ],
         },
         {
             type: "text",
-            title: "7. Fraud & Abuse",
-            description: "Refunds may be denied and accounts suspended in cases of misuse, fraud, or chargeback abuse. Chargebacks during active requests are treated as disputes."
+            title: "7. Faulty or Failed AI Generations",
+            bullets: [
+                "If your generated resume fails to render, download, or contains critical formatting errors, contact support for a free re-generation or token reimbursement.",
+                "Refunds may apply in cases where the generation was unsuccessful due to a technical fault on our servers.",
+                "We may request logs or screenshots to validate the issue.",
+            ],
         },
         {
             type: "text",
-            title: "8. Changes to This Policy",
-            description: "We may update this policy with notice via our website or email."
+            title: "8. Fraud & Abuse Prevention",
+            description:
+                "Refunds will be denied, and accounts may be suspended if fraudulent or abusive refund behavior is detected, including excessive refund requests, chargebacks, or misuse of AI tools. Active chargebacks during review are treated as disputes.",
         },
         {
             type: "text",
-            title: "9. Record Retention",
-            description: "We store transaction and refund records for at least 2 years or longer in case of audits or disputes."
+            title: "9. Policy Updates",
+            description:
+                "We may update this policy at any time to reflect changes in pricing, token structure, or legal requirements. Updates will be posted on our website or sent to your account email.",
         },
         {
             type: "text",
-            title: "10. Contact",
+            title: "10. Record Retention",
+            description:
+                "We keep refund and transaction records for at least 2 years for compliance, fraud prevention, and audit purposes.",
+        },
+        {
+            type: "text",
+            title: "11. Contact Information",
             bullets: [
                 `Support: ${COMPANY_EMAIL}`,
-                `Address: ${COMPANY_LEGAL_NAME}, ${COMPANY_ADDRESS}`
-            ]
+                `Company: ${COMPANY_LEGAL_NAME}`,
+                `Address: ${COMPANY_ADDRESS}`,
+                `Company No.: ${COMPANY_NUMBER}`,
+            ],
         },
         {
             type: "text",
             title: "Effective Date",
-            description: "This refund policy is effective from 18 September 2025."
-        }
-    ]
+            description: "This refund policy is effective from 6 October 2025.",
+        },
+    ],
 };
 
 export default refundPolicySchema;
