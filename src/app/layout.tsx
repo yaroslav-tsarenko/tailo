@@ -8,9 +8,9 @@ import ProtectedRoute from "@/components/features/protected-route/ProtectedRoute
 import {currentFont} from "@/resources/styles-config";
 import {I18nProvider} from "@/context/i18nContext";
 import {AllOrdersProvider} from "@/context/AllOrdersContext";
-import PDFExtractor from "@/components/features/pdf-extractor/PDFExtractor";
 import {CurrencyProvider} from "@/context/CurrencyContext";
 import {TransactionsProvider} from "@/context/TransactionContext";
+import {ResumeProvider} from "@/context/ResumeContext";
 
 function Layout({ children }: { children: React.ReactNode }) {
     return (
@@ -28,11 +28,13 @@ function Layout({ children }: { children: React.ReactNode }) {
                     <ProtectedRoute>
                         <TransactionsProvider>
                             <CurrencyProvider>
-                                <Header />
-                                <PageWrapper>
-                                    {children}
-                                </PageWrapper>
-                                <Footer />
+                                <ResumeProvider>
+                                    <Header />
+                                    <PageWrapper>
+                                        {children}
+                                    </PageWrapper>
+                                    <Footer />
+                                </ResumeProvider>
                             </CurrencyProvider>
                         </TransactionsProvider>
                     </ProtectedRoute>

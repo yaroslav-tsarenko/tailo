@@ -13,11 +13,8 @@ export const headerContent = {
         href: "/"
     },
     links: [
-        { label: "Home", href: "/get-started" },
-        { label: "Our Story", href: "/about-us" },
         { label: "Solutions", href: "/services" },
         { label: "Plans & Pricing", href: "/pricing" },
-        { label: "Help Center", href: "/faq" },
         { label: "Contact", href: "/contact-us" }
     ]
 };
@@ -28,11 +25,8 @@ export const footerContent = {
         {
             title: "Navigation",
             links: [
-                { label: "About", href: "/about-us" },
-                { label: "Services", href: "/services" },
-                { label: "Pricing", href: "/pricing" },
-                { label: "Faq", href: "/faq" },
-                { label: "Get Started", href: "/get-started" },
+                { label: "Solutions", href: "/services" },
+                { label: "Plans & Pricing", href: "/pricing" },
                 { label: "Contact Us", href: "/contact-us" },
             ]
         },

@@ -1,0 +1,48 @@
+.dialogContainer {
+  background: #fff;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+}
+
+.cropArea {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background: #f5f7fa;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.08);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 20px 24px;
+  gap: 14px;
+}
+
+.preview {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px solid #0070f3;
+  object-fit: cover;
+  box-shadow: 0 0 14px rgba(0, 112, 243, 0.25);
+  margin-bottom: 8px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.MuiSlider-root {
+  width: 80%;
+}

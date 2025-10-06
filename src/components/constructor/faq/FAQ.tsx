@@ -1,6 +1,6 @@
 "use client";
-import { IoIosArrowDown } from "react-icons/io";
-import React, { useState } from "react";
+import {IoIosArrowDown} from "react-icons/io";
+import React, {useState} from "react";
 import styles from "./FAQ.module.scss";
 
 interface FAQItem {
@@ -12,7 +12,7 @@ interface FAQProps {
     items: FAQItem[];
 }
 
-const FAQ: React.FC<FAQProps> = ({ items }) => {
+const FAQ: React.FC<FAQProps> = ({items}) => {
     const [openIndex, setOpenIndex] = useState<number | null>(null);
 
     const toggle = (idx: number) => {
@@ -21,7 +21,10 @@ const FAQ: React.FC<FAQProps> = ({ items }) => {
 
     return (
         <div className={styles.wrapper}>
-            <h2 className={styles.title}>FaQ</h2>
+            <div className={styles.titles}>
+                <h2>Got Questions?</h2>
+                <h3>We've Got Answers</h3>
+            </div>
             <div className={styles.faq}>
                 {items.map((item, idx) => (
                     <div
@@ -68,7 +71,7 @@ const FAQ: React.FC<FAQProps> = ({ items }) => {
                                     fontSize: "1.5rem",
                                 }}
                             >
-                                <IoIosArrowDown />
+                                <IoIosArrowDown/>
                             </span>
                         </button>
                         <div

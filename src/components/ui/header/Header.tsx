@@ -52,33 +52,33 @@ const Header: React.FC = () => {
                 style={scrolledStyle}
             >
                 <div className={styles.headerInner}>
-                    <a href={headerContent.logo.href} className={styles.logo}>
-                        <Image
-                            width={120}
-                            height={30}
-                            src={headerContent.logo.src}
-                            alt={headerContent.logo.alt}
-                        />
-                    </a>
-
-                    <nav
-                        className={styles.nav}
-                        style={
-                            {
-                                "--link-color": headerStyles.linkColor,
-                                "--link-hover-color": headerStyles.linkHoverColor,
-                            } as React.CSSProperties
-                        }
-                    >
-                        {headerContent.links.map((link) => (
-                            <a href={link.href} key={link.label} className={styles.link}>
-                                {link.label}
-                            </a>
-                        ))}
-                    </nav>
+                    <div className={styles.headerNav}>
+                        <a href={headerContent.logo.href} className={styles.logo}>
+                            <Image
+                                width={90}
+                                height={30}
+                                src={headerContent.logo.src}
+                                alt={headerContent.logo.alt}
+                            />
+                        </a>
+                        <nav
+                            className={styles.nav}
+                            style={
+                                {
+                                    "--link-color": headerStyles.linkColor,
+                                    "--link-hover-color": headerStyles.linkHoverColor,
+                                } as React.CSSProperties
+                            }
+                        >
+                            {headerContent.links.map((link) => (
+                                <a href={link.href} key={link.label} className={styles.link}>
+                                    {link.label}
+                                </a>
+                            ))}
+                        </nav>
+                    </div>
 
                     <div className={styles.actions}>
-                        <Selectors/>
                         <AuthButtons/>
                     </div>
 

@@ -1,20 +1,21 @@
-import React, { useState } from "react";
-import { useUser } from "@/context/UserContext";
+import React, {useState} from "react";
+import {useUser} from "@/context/UserContext";
 import ButtonUI from "@/components/ui/button/ButtonUI";
 import Link from "next/link";
 import styles from "./AuthButtons.module.scss";
-import { MdStars } from "react-icons/md";
+import {MdStars} from "react-icons/md";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useAlert } from "@/context/AlertContext";
+import {useAlert} from "@/context/AlertContext";
 import {useAuthActions} from "@/utils/logoutClient";
-
+import {MdGeneratingTokens} from "react-icons/md";
+import {Tooltip} from "@mui/material";
 
 const AuthButtons: React.FC = () => {
     const user = useUser();
-    const { logout, logoutAll } = useAuthActions();
-    const { showAlert } = useAlert();
+    const {logout, logoutAll} = useAuthActions();
+    const {showAlert} = useAlert();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -33,7 +34,7 @@ const AuthButtons: React.FC = () => {
     if (user) {
         return (
             <div className={styles.authedUser}>
-                <div className={styles.userInfo} onClick={handleAvatarClick}>
+                <div className={styles.userInfo}>
                     <Avatar
                         src={user.name}
                         alt={user.name}
@@ -42,30 +43,23 @@ const AuthButtons: React.FC = () => {
                     <div className={styles.userDetails}>
                         <span className={styles.userName}>{user.name}</span>
                         <div className={styles.userBalance}>
-                            <p className={styles.balanceText}>
-                                <MdStars className={styles.tokenIcon} />{user.tokens ?? 0}
-                            </p>
+                            <Tooltip title={`Your's available token balance is ${user.tokens} Tokens`}>
+                                <p className={styles.balanceText}>
+                                    <MdGeneratingTokens className={styles.tokenIcon}/> {user.tokens ?? 0}
+                                </p>
+                            </Tooltip>
                             <Link href="/pricing" className={styles.buyLink}>
-                                Buy tokens
+                                Add funds
                             </Link>
                         </div>
                     </div>
                 </div>
-                <Menu
-                    anchorEl={anchorEl}
-                    open={Boolean(anchorEl)}
-                    onClose={handleMenuClose}
-                >
-                    <MenuItem onClick={handleMenuClose}>
-                        <Link href="/dashboard" className={styles.menuLink}>
-                            Go To App
-                        </Link>
-                    </MenuItem>
-                    <MenuItem onClick={handleLogout}>
-                        Logout
-                    </MenuItem>
-                </Menu>
-
+                <Link href="/dashboard">
+                    <ButtonUI text="Go to App" shape="default" color="secondary" hoverColor="secondary"
+                              hoverEffect="none"/>
+                </Link>
+                <ButtonUI text="Logout" shape="default" color="linkHover" hoverColor="linkHover" hoverEffect="none"
+                          onClick={handleLogout}/>
             </div>
         );
     }

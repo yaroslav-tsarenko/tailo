@@ -1,66 +1,37 @@
 "use client";
 import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
-import { Box, Typography, Input, Textarea, Button, Card } from "@mui/joy";
+import { Textarea, Button, Card, Typography } from "@mui/joy";
 import Confetti from "react-confetti";
 import styles from "./ContactUsForm.module.scss";
 import { validationSchema, initialValues, sendContactRequest } from "./schema";
 import { useAlert } from "@/context/AlertContext";
-import { useI18n } from "@/context/i18nContext";
-
-const translations = {
-    en: {
-        formTitle: "Get in Touch ✨",
-        formDesc: "We’d love to hear from you. Fill in your details and our team will get back shortly.",
-        firstName: "First Name",
-        secondName: "Last Name",
-        email: "Email Address",
-        phone: "Phone Number",
-        message: "Your Message",
-        send: "Send Message",
-        successMsg: "✅ Thanks! Your message has been sent successfully!",
-        successAlertTitle: "Success",
-        successAlertMsg: "Your request has been sent!",
-        errorAlertTitle: "Error",
-        errorAlertMsg: "Failed to send. Please try again.",
-    },
-    tr: {
-        formTitle: "Bizimle İletişime Geçin ✨",
-        formDesc: "Bilgilerinizi doldurun, en kısa sürede size ulaşalım.",
-        firstName: "Ad",
-        secondName: "Soyad",
-        email: "E-posta",
-        phone: "Telefon Numarası",
-        message: "Mesajınız",
-        send: "Mesaj Gönder",
-        successMsg: "✅ Teşekkürler! Mesajınız başarıyla gönderildi!",
-        successAlertTitle: "Başarılı",
-        successAlertMsg: "Talebiniz gönderildi!",
-        errorAlertTitle: "Hata",
-        errorAlertMsg: "Gönderilemedi. Lütfen tekrar deneyin.",
-    },
-};
+import InputUI from "@/components/ui/input/InputUI";
 
 const ContactUsForm = () => {
     const { showAlert } = useAlert();
-    const { lang } = useI18n();
-    const t = translations[lang] || translations.en;
     const [showConfetti, setShowConfetti] = useState(false);
     const [successMsg, setSuccessMsg] = useState("");
 
     const handleSubmit = async (
         values: typeof initialValues,
-        { setSubmitting, resetForm }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
+        {
+            setSubmitting,
+            resetForm,
+        }: {
+            setSubmitting: (isSubmitting: boolean) => void;
+            resetForm: () => void;
+        }
     ) => {
         try {
             await sendContactRequest(values);
             resetForm();
-            setSuccessMsg(t.successMsg);
+            setSuccessMsg("✅ Thanks! Your message has been sent successfully!");
             setShowConfetti(true);
-            showAlert(t.successAlertTitle, t.successAlertMsg, "success");
+            showAlert("Success", "Your request has been sent!", "success");
             setTimeout(() => setShowConfetti(false), 4000);
         } catch {
-            showAlert(t.errorAlertTitle, t.errorAlertMsg, "error");
+            showAlert("Error", "Failed to send. Please try again.", "error");
         }
         setSubmitting(false);
     };
@@ -74,10 +45,10 @@ const ContactUsForm = () => {
                 ) : (
                     <>
                         <Typography level="h2" className={styles.formTitle}>
-                            {t.formTitle}
+                            Get in Touch ✨
                         </Typography>
                         <Typography level="body-md" className={styles.formDesc}>
-                            {t.formDesc}
+                            We’d love to hear from you. Fill in your details and our team will get back shortly.
                         </Typography>
 
                         <Formik
@@ -88,65 +59,74 @@ const ContactUsForm = () => {
                             {({ errors, touched, isSubmitting }) => (
                                 <Form className={styles.form}>
                                     <div className={styles.formGroupRow}>
-                                        <Field name="name">
+                                        <Field name="name" >
                                             {({ field }: { field: any }) => (
-                                                <Input
+                                                <InputUI
                                                     {...field}
-                                                    placeholder={t.firstName}
-                                                    className={styles.input}
-                                                    error={touched.name && !!errors.name}
+                                                    label="First Name"
+                                                    placeholder="First Name"
+                                                    error={touched.name && errors.name ? errors.name : ""}
                                                 />
                                             )}
                                         </Field>
+
                                         <Field name="secondName">
                                             {({ field }: { field: any }) => (
-                                                <Input
+                                                <InputUI
                                                     {...field}
-                                                    placeholder={t.secondName}
-                                                    className={styles.input}
-                                                    error={touched.secondName && !!errors.secondName}
+                                                    label="Last Name"
+                                                    placeholder="Last Name"
+                                                    error={
+                                                        touched.secondName && errors.secondName
+                                                            ? errors.secondName
+                                                            : ""
+                                                    }
                                                 />
                                             )}
                                         </Field>
                                     </div>
+
                                     <Field name="email">
                                         {({ field }: { field: any }) => (
-                                            <Input
+                                            <InputUI
                                                 {...field}
                                                 type="email"
-                                                placeholder={t.email}
-                                                className={styles.input}
-                                                error={touched.email && !!errors.email}
+                                                label="Email Address"
+                                                placeholder="Email Address"
+                                                error={touched.email && errors.email ? errors.email : ""}
                                             />
                                         )}
                                     </Field>
+
                                     <Field name="phone">
                                         {({ field }: { field: any }) => (
-                                            <Input
+                                            <InputUI
                                                 {...field}
                                                 type="tel"
-                                                placeholder={t.phone}
-                                                className={styles.input}
-                                                error={touched.phone && !!errors.phone}
+                                                label="Phone Number"
+                                                placeholder="Phone Number"
+                                                error={touched.phone && errors.phone ? errors.phone : ""}
                                             />
                                         )}
                                     </Field>
+
                                     <Field name="message">
                                         {({ field }: { field: any }) => (
                                             <Textarea
                                                 {...field}
                                                 minRows={4}
-                                                placeholder={t.message}
+                                                placeholder="Your Message"
                                                 className={styles.textarea}
                                             />
                                         )}
                                     </Field>
+
                                     <Button
                                         type="submit"
                                         loading={isSubmitting}
                                         className={styles.submitBtn}
                                     >
-                                        {t.send}
+                                        Send Message
                                     </Button>
                                 </Form>
                             )}

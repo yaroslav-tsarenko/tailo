@@ -2,10 +2,7 @@
 
 import React, { useState } from 'react';
 import styles from './Dashboard.module.scss';
-import ManualGenerator from "@/components/widgets/manual-generator/ManualGenerator";
 import AllOrders from "@/components/widgets/all-orders/AllOrders";
-import { useI18n } from "@/context/i18nContext";
-import QRGenerator from "@/components/widgets/qr-generator/QRGenerator";
 import Tabs from '@mui/joy/Tabs';
 import TabList from '@mui/joy/TabList';
 import Tab from '@mui/joy/Tab';
@@ -14,29 +11,16 @@ import Typography from '@mui/joy/Typography';
 import Avatar from '@mui/joy/Avatar';
 import { useUser } from "@/context/UserContext";
 import Transactions from "@/components/widgets/transactions/Transactions";
-
-const translations = {
-    en: {
-        generateQr: "Generate QR Code",
-        myOrders: "My Orders",
-        myTransactions: "My Transactions",
-    },
-    tr: {
-        generateQr: "QR Kod Oluştur",
-        myOrders: "Siparişlerim",
-        myTransactions: "İşlemlerim",
-    }
-};
+import {PDFDownloadButton} from "@/components/widgets/pdf-constructor/PDFDownloadButton";
+import ResumeGenerator from "@/components/widgets/resume-generator/ResumeGenerator";
 
 const Dashboard = () => {
-    const [activeTab, setActiveTab] = useState<'qr' | 'orders' | 'transactions'>('qr');
-    const { lang } = useI18n();
-    const t = translations[lang] || translations.en;
+    const [activeTab, setActiveTab] = useState<'resume' | 'orders' | 'transactions'>('resume');
     const user = useUser();
 
     const handleTabChange = (_event: React.SyntheticEvent<Element, Event> | null, newValue: string | number | null) => {
         if (typeof newValue === "string") {
-            setActiveTab(newValue as 'qr' | 'orders' | 'transactions');
+            setActiveTab(newValue as 'resume' | 'orders' | 'transactions');
         }
     };
 
@@ -54,14 +38,14 @@ const Dashboard = () => {
             <div className={styles.header}>
                 <Tabs value={activeTab} onChange={handleTabChange}>
                     <TabList>
-                        <Tab value="qr">{t.generateQr}</Tab>
-                        <Tab value="orders">{t.myOrders}</Tab>
-                        <Tab value="transactions">{t.myTransactions}</Tab>
+                        <Tab value="resume">Generate Resume</Tab>
+                        <Tab value="orders">My Orders</Tab>
+                        <Tab value="transactions">My Transactions</Tab>
                     </TabList>
                 </Tabs>
             </div>
             <div className={styles.widgets}>
-                {activeTab === 'qr' && <QRGenerator />}
+                {activeTab === 'resume' && <ResumeGenerator/>}
                 {activeTab === 'orders' && <AllOrders />}
                 {activeTab === 'transactions' && <Transactions />}
             </div>

@@ -10,52 +10,54 @@ import {
 const pricingSchema: PageSchema = {
     meta: {
         title: `Pricing — ${COMPANY_NAME}`,
-        description: `Discover flexible, transparent pricing for ${COMPANY_NAME}. Generate and customize barcodes at affordable rates — no subscriptions, no hidden fees.`,
+        description: `Discover transparent, token-based pricing for ${COMPANY_NAME}. Generate AI-powered, ATS-friendly resumes and cover letters without subscriptions or hidden fees.`,
         keywords: [
             `${COMPANY_NAME} pricing`,
-            "barcode generator pricing",
-            "UPC-A pricing",
-            "EAN-13 pricing",
-            "Code128",
-            "Code39",
-            "bulk barcode plans"
+            "AI resume generator pricing",
+            "token resume plans",
+            "ATS resume builder cost",
+            "AI CV writing packages",
+            "affordable resume creation",
+            "AI job application tools"
         ],
         canonical: "/pricing",
         ogImage: {
             title: `${COMPANY_NAME} Pricing`,
-            description: "Affordable, flexible pricing for barcode generation.",
-            bg: "#f4faff",
+            description: "Affordable and flexible token-based pricing for AI-powered resume generation.",
+            bg: "#f8faff",
             color: "#0070f3",
         },
     },
 
     blocks: [
+        // HERO
         {
             type: "hero",
             bgImage: "image10",
-            title: "Transparent Pricing for Professional Barcodes",
-            description: `Choose the perfect plan for personal, professional, or business barcode generation. Pay only for what you use — no recurring fees.`,
+            title: "Simple, Transparent, Token-Based Pricing",
+            description: `Pay only for what you use — no subscriptions, no hidden fees. Whether you need a single AI-optimized resume or a complete job-application bundle, ${COMPANY_NAME} gives you full control.`,
             buttons: [
                 { text: "Get Started", link: "/get-started", color: "primary" },
-                { text: "Contact Us", link: "/contact-us", color: "secondary" },
+                { text: "Contact Support", link: "/contact-us", color: "secondary" },
             ],
         },
 
+        // FLEXIBLE PLANS OVERVIEW
         {
             type: "section",
             align: "center",
             gap: "2rem",
             left: {
                 type: "text",
-                title: "Fair and Flexible Plans",
-                description: `We keep things simple: no subscriptions, no hidden fees. Whether you need a single barcode or thousands for your business, ${COMPANY_NAME} adapts to your needs.`,
+                title: "Fair and Flexible Token Plans",
+                description: `${COMPANY_NAME} uses a simple token system. Each resume, cover letter, or optimization costs a small number of tokens — you decide how to spend them.`,
                 bullets: [
-                    "No subscriptions or recurring payments",
-                    "Pay-as-you-go flexibility",
-                    "Affordable for individuals and enterprises",
-                    "Bulk barcode generation available"
+                    "No subscriptions or hidden charges",
+                    "Pay only for generated resumes or extras",
+                    "Flexible for individuals and recruiters",
+                    "Top up anytime, keep your unused tokens"
                 ],
-                iconName: "layers",
+                iconName: "token",
                 iconSize: 48,
                 iconColor: "#0070f3",
                 iconBg: "#e6f7ff",
@@ -69,11 +71,11 @@ const pricingSchema: PageSchema = {
                 src: "image1",
                 width: "100%",
                 height: "400px",
-                alt: "Barcode pricing overview",
+                alt: "Token pricing overview",
             },
         },
 
-        // комбінований блок: текст + таблиця тарифів
+        // PRICING GRID
         {
             type: "section",
             align: "center",
@@ -86,80 +88,80 @@ const pricingSchema: PageSchema = {
                     {
                         type: "pricing",
                         variant: "basic",
-                        title: "Starter Pack",
+                        title: "Starter Plan",
                         price: "10",
-                        description: "For individuals who need a few barcodes.",
+                        description: "For students or job seekers creating their first AI-optimized resume.",
                         features: [
-                            "Up to 50 barcodes",
-                            "Standard customization",
-                            "Download in PNG/JPG",
-                            "No expiration"
+                            "100 tokens included",
+                            "1 professional resume + 1 cover letter",
+                            "Basic template customization",
+                            "Export to PDF and DOCX"
                         ],
-                        buttonText: "Buy Now",
-                        buttonLink: "/contact-us",
+                        buttonText: "Start Now",
+                        buttonLink: "/get-started",
                     },
                     {
                         type: "pricing",
                         variant: "highlight",
-                        title: "Professional Pack",
+                        title: "Professional Plan",
                         price: "25",
-                        description: "For professionals and small teams.",
+                        description: "Perfect for professionals applying to multiple positions.",
                         features: [
-                            "Up to 500 barcodes",
-                            "Advanced customization (colors, human-readable text)",
-                            "High-resolution exports",
-                            "Bulk-friendly"
+                            "300 tokens included",
+                            "Up to 3 resumes + 3 cover letters",
+                            "Advanced keyword optimization",
+                            "ATS & readability analysis"
                         ],
-                        buttonText: "Get Pro",
-                        buttonLink: "/contact-us",
+                        buttonText: "Go Pro",
+                        buttonLink: "/get-started",
                     },
                     {
                         type: "pricing",
                         variant: "premium",
-                        title: "Business Pack",
+                        title: "Business Plan",
                         price: "50",
-                        description: "For businesses with ongoing barcode needs.",
+                        description: "For agencies, HR departments, or power users managing many resumes.",
                         features: [
-                            "Unlimited barcodes",
-                            "Full customization",
-                            "Priority support",
-                            "Batch export"
+                            "700 tokens included",
+                            "Unlimited resume generations",
+                            "Team collaboration tools",
+                            "Priority AI model and support"
                         ],
-                        buttonText: "Go Business",
-                        buttonLink: "/contact-us",
+                        buttonText: "Upgrade",
+                        buttonLink: "/get-started",
                     },
                     {
                         type: "pricing",
                         variant: "basic",
-                        title: "Custom Pack",
+                        title: "Custom Enterprise",
                         price: "dynamic",
-                        description: "Define your own package and get instant pricing.",
+                        description: "For organizations or universities — tailor your own token package.",
                         features: [
-                            "Flexible number of barcodes",
-                            "Custom features",
-                            "No expiration",
-                            "Perfect for enterprises"
+                            "Custom token quantity",
+                            "Bulk resume generation",
+                            "Dedicated AI configuration",
+                            "Personal success manager"
                         ],
-                        buttonText: "Contact Us",
+                        buttonText: "Contact Sales",
                         buttonLink: "/contact-us",
                     },
                 ],
             },
         },
 
-        // комбінований блок: як працює тарифікація + приклади
+        // HOW PRICING WORKS
         {
             type: "section",
             gap: "2rem",
             left: {
                 type: "text",
-                title: "How Our Pricing Works",
-                description: `You only pay for the barcodes you generate. Higher plans unlock more features and customization options. Your barcodes never expire, and you can download them anytime.`,
+                title: "How Token Pricing Works",
+                description: `Every resume, cover letter, or optimization feature consumes tokens. You can preview, regenerate, or update sections using the same token balance — no subscriptions required.`,
                 bullets: [
-                    "All barcode formats included in all plans",
-                    "Advanced features available in Pro/Business",
-                    "No hidden costs",
-                    "Transparent pay-as-you-go model",
+                    "1 resume = ~30 tokens (depends on length)",
+                    "Extras like keyword optimization or formatting = +5–10 tokens",
+                    "Unused tokens never expire",
+                    "Top-up directly from your dashboard"
                 ],
                 iconName: "settings",
                 iconSize: 40,
@@ -172,23 +174,23 @@ const pricingSchema: PageSchema = {
                 src: "image2",
                 width: "100%",
                 height: "400px",
-                alt: "How barcode pricing works",
+                alt: "How token system works",
             },
         },
 
-        // комбінований блок: відгуки
+        // TESTIMONIALS
         {
             type: "section",
             align: "center",
             gap: "3rem",
             left: {
                 type: "text",
-                title: "What Our Customers Say",
-                description: `Thousands of users trust ${COMPANY_NAME} for barcode generation. Our simple and affordable pricing works for freelancers, teams, and enterprises.`,
+                title: "What Our Users Say",
+                description: `Thousands of professionals trust ${COMPANY_NAME} to create powerful resumes. Our token system gives them freedom, flexibility, and confidence for every job application.`,
                 bullets: [
-                    `"Perfect for my product barcodes — affordable and easy."`,
-                    `"Our logistics team uses ${COMPANY_NAME} for shipment labeling."`,
-                    `"Best barcode generator with real customization."`,
+                    `"The token system makes it easy to pay only for what I need!"`,
+                    `"I built 3 resumes and 2 cover letters for under $20 — amazing value."`,
+                    `"Fast, clean, and beautifully designed — the AI knows what recruiters want."`
                 ],
                 iconName: "star",
                 iconSize: 48,
@@ -204,32 +206,33 @@ const pricingSchema: PageSchema = {
                 src: "image3",
                 width: "100%",
                 height: "400px",
-                alt: "Customer testimonials",
+                alt: "User testimonials for resume pricing",
             },
         },
 
+        // FAQ
         {
             type: "faq",
             items: [
                 {
-                    question: "Do barcodes expire?",
-                    answer: "No. Once generated and downloaded, your barcodes will always work.",
+                    question: "Do tokens expire?",
+                    answer: "No. Tokens never expire. You can use them anytime to generate or update resumes.",
                 },
                 {
-                    question: "Can I upgrade my plan later?",
-                    answer: "Yes. You can upgrade at any time for more features and unlimited barcode generation.",
+                    question: "Can I upgrade my plan?",
+                    answer: "Yes, you can add more tokens or switch plans anytime from your dashboard.",
                 },
                 {
-                    question: "What formats are available?",
-                    answer: "Barcodes can be downloaded in PNG, JPG, SVG, or PDF depending on your plan.",
+                    question: "What can I use tokens for?",
+                    answer: "Tokens can be used for resume generation, cover letters, keyword optimization, and layout adjustments.",
                 },
                 {
-                    question: "Do you offer refunds?",
-                    answer: "Refunds are available within 14 days for unused plans under our policy.",
+                    question: "Can I download my resumes?",
+                    answer: "Yes. All generated resumes and cover letters can be downloaded in PDF or DOCX format instantly.",
                 },
                 {
-                    question: "Is support available?",
-                    answer: `Yes. We provide support for all plans. Email us at ${COMPANY_EMAIL} for assistance.`,
+                    question: "Is support included?",
+                    answer: `Yes. Every plan includes free email support. For Business and Custom users, priority assistance is available at ${COMPANY_EMAIL}.`,
                 },
             ],
         },

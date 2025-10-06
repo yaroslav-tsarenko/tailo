@@ -3,190 +3,315 @@ import { COMPANY_NAME, COMPANY_EMAIL } from "@/resources/constants";
 
 const schema: PageSchema = {
     meta: {
-        title: `Get Started with ${COMPANY_NAME} — UPC Barcode Generator`,
+        title: `AI Resume Builder — Create Lightweight, ATS-Friendly CVs with ${COMPANY_NAME}`,
         description:
-            "Start generating UPC barcodes in seconds. Fast setup, precise output, and export-ready formats for retail, logistics, and product labeling.",
+            "Generate optimized, lightweight, and ATS-ready resumes using smart tokens. Stay relevant, readable, and professional with AI assistance — powered by cutting-edge resume generation technology.",
         keywords: [
-            "UPC barcode generator",
-            "create barcodes",
-            "GS1 barcodes",
-            "bulk barcode generation",
-            "barcode PNG SVG",
-            "retail barcode tool",
-            "barcode for packaging",
-            "generate UPC code",
+            "AI resume builder",
+            "ATS friendly CV",
+            "optimized resume",
+            "lightweight resume format",
+            "token based resume generation",
+            "AI career assistant",
+            "professional CV generator",
+            "fast resume builder",
+            "AI job application tool",
+            "relevant candidate profile",
         ],
-        canonical: "/get-started",
+        canonical: "/",
         ogImage: {
-            title: "Generate UPC Barcodes Easily",
-            description: "Retail-ready barcodes in just a few clicks. Export in high-res formats.",
-            bg: "#fff6f0",
-            color: "#ff6600",
+            title: "Build the Perfect Resume with AI",
+            description:
+                "Generate professional, keyword-optimized resumes with one click. Lightweight, ATS-ready, and job-relevant.",
+            bg: "#ffffff",
+            color: "#9532ff",
         },
     },
+
     blocks: [
-        {
-            type: "qr-generator"
-        },
+        // 🟣 HERO
         {
             type: "hero",
-            bgImage: "image23",
-            title: "Your Path to Perfect UPC Barcodes Starts Here",
+            bgImage: "image4",
+            title: "Build Smarter Resumes with AI — Be the Candidate Everyone Wants",
             description:
-                "Create compliant, retail-ready barcodes for packaging, inventory, and logistics — no special tools required.",
+                "Our AI Resume Generator helps you craft an optimized, ATS-friendly, and beautifully structured CV that weighs less, loads faster, and gets noticed by recruiters.",
             buttons: [
-                { text: "Generate UPC", link: "/dashboard", color: "primary" },
-                { text: "Help Center", link: "/faq", color: "secondary" },
+                { text: "Create My Resume", link: "/dashboard", color: "primary" },
+                { text: "View Pricing", link: "/pricing", color: "secondary" },
             ],
         },
+
+        // 🟢 STEPS
         {
             type: "steps",
-            title: "How It Works in 3 Easy Steps",
+            title: "How It Works in 3 Simple Steps",
             items: [
                 {
                     number: 1,
-                    title: "Enter Your Code",
-                    description: "Input your 12-digit UPC or generate sequential codes in bulk.",
-                    iconName: "edit",
+                    title: "Choose Your Resume Type",
+                    description:
+                        "Select from modern templates optimized for tech, business, or creative roles. Each template is AI-ready.",
+                    iconName: "layers",
                 },
                 {
                     number: 2,
-                    title: "Customize Output",
+                    title: "Generate & Customize",
                     description:
-                        "Select barcode size, resolution, and format. Customize margins and alignment.",
-                    iconName: "palette",
+                        "Use tokens to instantly generate your resume. Add custom sections, achievements, and metrics with AI help.",
+                    iconName: "sparkles",
                 },
                 {
                     number: 3,
-                    title: "Download & Print",
+                    title: "Download & Apply",
                     description:
-                        "Export as PNG, SVG, or PDF. Print or embed directly in your product labels.",
+                        "Export your lightweight PDF — ready for ATS systems, recruiters, and online applications.",
                     iconName: "download",
                 },
             ],
         },
+
+        // 🔵 SECTION – AI ADVANTAGE
         {
             type: "section",
             align: "left",
             gap: "2rem",
             left: {
                 type: "text",
-                title: "Why Choose Our UPC Generator?",
+                title: "Why Our AI Resume Generator Stands Out",
                 description:
-                    "Designed for speed and accuracy, our tool supports batch generation, label-ready formatting, and all major barcode standards.",
+                    "Unlike traditional builders, our AI focuses on clarity, structure, and data-driven optimization. Every CV is reviewed for readability, weight, and compliance with modern applicant tracking systems.",
                 bullets: [
-                    "No login required for basic usage",
-                    "GS1-compliant formatting",
-                    "Print-safe export options",
+                    "AI-powered content suggestions",
+                    "Automatic formatting and layout optimization",
+                    "Designed for maximum recruiter visibility",
                 ],
-                iconName: "barcode",
-                iconSize: 40,
-                iconColor: "#ff6600",
-                iconBg: "#fff3e6",
+                iconName: "robot",
+                iconSize: 44,
+                iconColor: "#9532ff",
+                iconBg: "#f6f0ff",
             },
             right: {
                 type: "media",
                 mediaType: "image",
-                src: "image13",
+                src: "image15",
                 width: "100%",
-                height: "400px",
-                alt: "UPC Barcode Generation Interface",
+                height: "380px",
+                alt: "AI Resume Optimization Dashboard",
             },
         },
+
+        // 🟠 GRID – BENEFITS
         {
             type: "grid",
             columns: 3,
             gap: "2rem",
             cards: [
                 {
-                    image: "image5",
-                    title: "Bulk Barcode Creation",
-                    description: "Generate dozens or hundreds of UPCs at once with consistent formatting.",
-                    buttonLink: "/bulk-generator",
-                    buttonText: "Try Bulk Tool",
-                },
-                {
-                    image: "image10",
-                    title: "Flexible Output Settings",
+                    image: "image8",
+                    title: "ATS-Friendly Design",
                     description:
-                        "Control margin, label text, alignment, and export DPI with precision.",
-                    buttonLink: "/faq",
-                    buttonText: "See Options",
+                        "Each resume is fully optimized for Applicant Tracking Systems — no fancy graphics that block parsing.",
+                    buttonLink: "/services",
+                    buttonText: "Learn More",
                 },
                 {
-                    image: "image12",
-                    title: "Retail-Ready Design",
-                    description: "Compliant with industry requirements and ready for printing on packaging.",
+                    image: "image17",
+                    title: "Lightweight & Fast",
+                    description:
+                        "Get PDF resumes that load instantly on any platform and stay under 1MB — perfect for online applications.",
                     buttonLink: "/pricing",
-                    buttonText: "See Pricing",
+                    buttonText: "View Plans",
+                },
+                {
+                    image: "image11",
+                    title: "Career-Relevant Optimization",
+                    description:
+                        "AI adapts to your industry, skill level, and job title to ensure your CV matches what recruiters search for.",
+                    buttonLink: "/contact-us",
+                    buttonText: "Get Help",
                 },
             ],
         },
+
+        // 🟣 TEXT – SEO SECTION
+        {
+            type: "text",
+            title: "Boost Your Job Search Visibility",
+            description:
+                "A great resume is more than words — it’s a data-optimized document that search engines and job boards love. By using smart structure, keywords, and low-weight PDFs, you increase your visibility across job platforms like LinkedIn, Indeed, and Glassdoor.",
+            bullets: [
+                "SEO-friendly structure for online job boards",
+                "Built-in keyword optimization for your field",
+                "Automatic title and description balance",
+            ],
+            iconName: "search",
+            iconSize: 38,
+            iconColor: "#68cfff",
+            iconBg: "#e7f8ff",
+        },
+
         {
             type: "testimonials",
-            title: "What Our Clients Say",
+            title: "Real Users, Real Results",
             items: [
                 {
-                    name: "Anna",
-                    role: "E-commerce Seller",
-                    text: "I needed 200 barcodes for Amazon. This tool made it incredibly simple and fast.",
-                    avatar: "https://i.pravatar.cc/150?img=12",
+                    name: "Sophia",
+                    role: "Software Developer",
+                    text: "My ATS score jumped by 40%. The AI made my CV clean, relevant, and powerful.",
+                    avatar: "https://i.pravatar.cc/150?img=47",
                 },
                 {
-                    name: "Kevin",
-                    role: "Retail Manager",
-                    text: "We use this to generate barcodes for every new product line. Works perfectly.",
+                    name: "Michael",
+                    role: "Marketing Manager",
+                    text: "I used 20 tokens to build three different resumes. Each version fit my job perfectly.",
                     avatar: "https://i.pravatar.cc/150?img=22",
                 },
                 {
-                    name: "Lisa",
-                    role: "Warehouse Lead",
-                    text: "Great export options! PNG and SVGs with perfect scaling.",
-                    avatar: "https://i.pravatar.cc/150?img=30",
+                    name: "Liam",
+                    role: "Business Analyst",
+                    text: "Finally, a tool that makes professional resumes simple. The layout looks human, not robotic.",
+                    avatar: "https://i.pravatar.cc/150?img=15",
                 },
                 {
-                    name: "Daniel",
-                    role: "Startup Founder",
-                    text: "Saved us hours — no need to hire a designer or buy expensive software.",
-                    avatar: "https://i.pravatar.cc/150?img=18",
+                    name: "Isabella",
+                    role: "UX Designer",
+                    text: "My resume size dropped to 700KB and passed every upload test. Recruiters love it!",
+                    avatar: "https://i.pravatar.cc/150?img=33",
                 },
                 {
-                    name: "Sara",
-                    role: "Labeling Technician",
-                    text: "Margins and print DPI options helped us avoid reprints. Great tool.",
-                    avatar: "https://i.pravatar.cc/150?img=25",
+                    name: "Olivia",
+                    role: "HR Specialist",
+                    text: "As a recruiter, I immediately notice the clarity of resumes made with this tool. It's exactly what HR systems need.",
+                    avatar: "https://i.pravatar.cc/150?img=38",
                 },
                 {
-                    name: "George",
-                    role: "Operations Director",
-                    text: "Used it across our packaging workflow. Everything looks clean and compliant.",
-                    avatar: "https://i.pravatar.cc/150?img=9",
+                    name: "Ethan",
+                    role: "Data Scientist",
+                    text: "The token-based system is genius. I refined my resume multiple times without paying extra subscriptions.",
+                    avatar: "https://i.pravatar.cc/150?img=56",
                 },
             ],
         },
+
+
+        // 🟡 SECTION – TOKEN MODEL
+        {
+            type: "section",
+            align: "right",
+            gap: "2rem",
+            left: {
+                type: "media",
+                mediaType: "image",
+                src: "image3",
+                width: "100%",
+                height: "360px",
+                alt: "Token Based Resume Generation",
+            },
+            right: {
+                type: "text",
+                title: "Generate with Tokens — Smarter Than Subscriptions",
+                description:
+                    "Use flexible tokens to pay only for what you need. Each token equals real AI generation power — resume drafts, rewrites, or cover letters. No recurring fees, no locked features.",
+                bullets: [
+                    "Pay-as-you-go simplicity",
+                    "Every token counts toward real content",
+                    "Refill tokens anytime, from any plan",
+                ],
+                iconName: "coins",
+                iconSize: 42,
+                iconColor: "#68cfff",
+                iconBg: "#f0faff",
+            },
+        },
+
+        // 🟢 PRICING
+        {
+            type: "grid",
+            columns: 3,
+            cards: [
+                {
+                    type: "pricing",
+                    variant: "basic",
+                    title: "Starter Pack",
+                    price: "5.00",
+                    tokens: 100,
+                    description: "Generate your first professional AI resume instantly.",
+                    features: [
+                        "Lightweight PDF resume",
+                        "Basic AI optimization",
+                        "1 cover letter draft",
+                    ],
+                    buttonText: "Buy Tokens",
+                },
+                {
+                    type: "pricing",
+                    variant: "highlight",
+                    title: "Pro Resume Kit",
+                    price: "15.00",
+                    tokens: 400,
+                    description: "Ideal for job seekers improving multiple resumes or cover letters.",
+                    features: [
+                        "Advanced AI optimization",
+                        "Unlimited downloads",
+                        "Multi-language support",
+                    ],
+                    buttonText: "Upgrade Now",
+                },
+                {
+                    type: "pricing",
+                    variant: "premium",
+                    title: "Career Master Pack",
+                    price: "30.00",
+                    tokens: 1000,
+                    description: "For professionals, freelancers, and career-changers who want excellence.",
+                    features: [
+                        "Full analytics & ATS score preview",
+                        "All-format export options",
+                        "Free future updates",
+                    ],
+                    buttonText: "Go Premium",
+                },
+            ],
+        },
+
+        // 🔵 FAQ
         {
             type: "faq",
             items: [
                 {
-                    question: "Is your generator GS1-compliant?",
+                    question: "What does ‘lightweight resume’ mean?",
                     answer:
-                        "Yes. Our UPC codes are rendered with correct height, width, and quiet zone requirements.",
+                        "It means your CV is under 1MB, fast to upload, and formatted with precision for all HR systems.",
                 },
                 {
-                    question: "Can I generate barcodes in bulk?",
+                    question: "What is an ATS-friendly resume?",
                     answer:
-                        "Yes! Use the bulk mode to create multiple barcodes at once with consistent layout.",
+                        "ATS (Applicant Tracking System)-friendly resumes are structured to be easily read by software that filters job applications.",
                 },
                 {
-                    question: "What formats can I download?",
+                    question: "How do tokens work?",
                     answer:
-                        "We support high-resolution PNG, SVG for vector use, and PDF for print-ready needs.",
+                        "Tokens are credits used to generate content. Each resume or cover letter consumes a few tokens — no subscriptions required.",
                 },
                 {
-                    question: "Do I need to sign up?",
+                    question: "Can I edit resumes after generation?",
                     answer:
-                        "No account is needed for most features. For saving history or batch exports, registration is helpful.",
+                        "Yes. You can adjust, rewrite, or re-export your resume anytime using the same token balance.",
                 },
+            ],
+        },
+
+        // 🟣 CTA / FINAL
+        {
+            type: "hero",
+            bgImage: "image20",
+            title: "Start Building Your Perfect Resume Today",
+            description:
+                "Don’t let poor formatting or unreadable CVs stop your career. Create optimized, fast, and professional resumes powered by AI.",
+            buttons: [
+                { text: "Start for Free", link: "/services", color: "primary" },
+                { text: "View Plans", link: "/pricing", color: "secondary" },
             ],
         },
     ],

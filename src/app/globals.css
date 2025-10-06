@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Damion&display=swap');
+
 * {
     box-sizing: border-box;
     padding: 0;
@@ -12,8 +14,8 @@ body {
 
 
 :root {
-    --primary-color: #4500E6;
-    --secondary-color: #D900AA;
+    --primary-color: #69cfff;
+    --secondary-color: #9434ff;
     --tertiary-color: #F39C12;
     --quaternary-color: #9B59B6;
 

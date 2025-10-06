@@ -1,24 +1,53 @@
 import * as React from "react";
-import TextField, { TextFieldProps } from "@mui/material/TextField";
+import Input, { InputProps } from "@mui/joy/Input";
 import { useField } from "formik";
+import Typography from "@mui/joy/Typography";
+import styles from "./InputUI.module.scss";
 
-type FormikInputProps = TextFieldProps & { name: string; formik?: boolean };
+type FormikInputProps = InputProps & {
+    name: string;
+    formik?: boolean;
+    helperText?: React.ReactNode;
+    label?: React.ReactNode;
+};
 
-const InputUI: React.FC<FormikInputProps> = ({ formik, ...props }) => {
+const InputUI: React.FC<FormikInputProps> = ({ formik, helperText, label, ...props }) => {
     if (formik && props.name) {
         const [field, meta] = useField(props.name);
+        const showError = !!meta.error && meta.touched;
         return (
             <>
-                <TextField
+                {label && (
+                    <Typography >
+                        {label}
+                    </Typography>
+                )}
+                <Input
                     {...field}
                     {...props}
-                    error={!!meta.error && meta.touched}
-                    helperText={meta.touched && meta.error ? meta.error : props.helperText}
+                    error={showError}
                 />
+                <Typography  color={showError ? "danger" : "neutral"}>
+                    {showError ? meta.error : helperText}
+                </Typography>
             </>
         );
     }
-    return <TextField {...props} />;
+    return (
+        <div className={styles.wrapper}>
+            {label && (
+                <Typography sx={{color: "#6b6b6b"}}>
+                    {label}
+                </Typography>
+            )}
+            <Input {...props}  />
+            {helperText && (
+                <Typography  color="neutral">
+                    {helperText}
+                </Typography>
+            )}
+        </div>
+    );
 };
 
 export default InputUI;

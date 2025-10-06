@@ -68,7 +68,6 @@ const DrawerMenu: FC<DrawerMenuProps> = ({open, onClose}) => {
                     ))}
                 </nav>
                 <div className={styles.selectorWrapper}>
-                    <Selectors/>
                     <AuthButtons/>
                 </div>
             </div>

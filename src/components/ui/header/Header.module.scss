@@ -62,6 +62,14 @@
   justify-content: space-between;
 }
 
+.headerNav {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  gap: 40px;
+
+}
+
 .logo img {
   height: 40px;
 }

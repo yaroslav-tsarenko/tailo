@@ -50,8 +50,8 @@ export default function SignInPage() {
                     description={t.description}
                     isSubmitting={isSubmitting}
                     fields={[
-                        { name: "email", type: "email", placeholder: t.email },
-                        { name: "password", type: "password", placeholder: t.password }
+                        { name: "email", type: "email", placeholder: t.email , label: "Email"},
+                        { name: "password", type: "password", placeholder: t.password, label: "Password" }
                     ]}
                     submitLabel={t.submit}
                 />
