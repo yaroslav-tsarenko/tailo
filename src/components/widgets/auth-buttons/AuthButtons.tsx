@@ -1,12 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import {useUser} from "@/context/UserContext";
 import ButtonUI from "@/components/ui/button/ButtonUI";
 import Link from "next/link";
 import styles from "./AuthButtons.module.scss";
-import {MdStars} from "react-icons/md";
 import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import {useAlert} from "@/context/AlertContext";
 import {useAuthActions} from "@/utils/logoutClient";
 import {MdGeneratingTokens} from "react-icons/md";
@@ -14,34 +11,27 @@ import {Tooltip} from "@mui/material";
 
 const AuthButtons: React.FC = () => {
     const user = useUser();
-    const {logout, logoutAll} = useAuthActions();
+    const {logout} = useAuthActions();
     const {showAlert} = useAlert();
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-    };
+    const displayName = user?.name?.trim() || user?.email?.split("@")[0] || "User";
 
     const handleLogout = async () => {
         const ok = await logout();
         showAlert(ok ? "Logged out" : "Logout failed", "", ok ? "success" : "error");
-        handleMenuClose();
     };
     if (user) {
         return (
             <div className={styles.authedUser}>
                 <div className={styles.userInfo}>
                     <Avatar
-                        src={user.name}
-                        alt={user.name}
+                        alt={displayName}
                         className={styles.avatar}
-                    />
+                    >
+                        {displayName.charAt(0).toUpperCase()}
+                    </Avatar>
                     <div className={styles.userDetails}>
-                        <span className={styles.userName}>{user.name}</span>
+                        <span className={styles.userName}>{displayName}</span>
                         <div className={styles.userBalance}>
                             <Tooltip title={`Your available token balance is ${user.tokens?.toLocaleString("de-DE") || 0} Tokens`}>
                                 <p className={styles.balanceText}>
