@@ -118,26 +118,37 @@ export async function POST(req: NextRequest) {
             totalTokens,
         } = body;
 
+        const tokensToSpend = Number(totalTokens);
+        if (!Number.isFinite(tokensToSpend) || tokensToSpend <= 0)
+            return NextResponse.json(
+                { message: "Invalid token amount" },
+                { status: 400 }
+            );
+
         const dbUser = await User.findById(user.sub);
         if (!dbUser)
             return NextResponse.json({ message: "User not found" }, { status: 404 });
 
-        if (dbUser.tokens < totalTokens)
+        // Atomic token deduction avoids full-document validation on legacy users
+        // and prevents race conditions from concurrent spending requests.
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: dbUser._id, tokens: { $gte: tokensToSpend } },
+            { $inc: { tokens: -tokensToSpend } },
+            { new: true }
+        );
+
+        if (!updatedUser)
             return NextResponse.json(
                 { message: "Insufficient tokens" },
                 { status: 402 }
             );
 
-        // 💳 Deduct tokens
-        dbUser.tokens -= totalTokens;
-        await dbUser.save();
-
         await Transaction.create({
             userId: dbUser._id,
             email: dbUser.email,
-            amount: totalTokens,
+            amount: tokensToSpend,
             type: "spend",
-            description: `AI Resume Adaptation (${totalTokens} tokens)`,
+            description: `AI Resume Adaptation (${tokensToSpend} tokens)`,
             createdAt: new Date(),
         });
 
@@ -202,10 +213,10 @@ export async function POST(req: NextRequest) {
         await sendEmail(
             dbUser.email,
             "Your Job-Matched Resume is Ready 🚀",
-            `Hi ${fullName || dbUser.name}, your AI-adapted resume and cover letter have been customized for the provided job description.`,
+            `Hi ${fullName || dbUser.name || "there"}, your AI-adapted resume and cover letter have been customized for the provided job description.`,
             `
       <h2>✅ Resume Adapted for Job</h2>
-      <p>You’ve successfully spent <b>${totalTokens}</b> tokens for resume rewriting and job adaptation.</p>
+      <p>You’ve successfully spent <b>${tokensToSpend}</b> tokens for resume rewriting and job adaptation.</p>
       <p>Position: <b>${role}</b></p>
       <p>Order ID: <b>${order._id}</b></p>
       <p>Visit your dashboard to view and download your optimized resume and cover letter.</p>
@@ -217,7 +228,7 @@ export async function POST(req: NextRequest) {
             message: "Resume adapted and rewritten successfully for job match",
             resumeData: json.resumeData,
             coverLetter: json.coverLetter,
-            tokensRemaining: dbUser.tokens,
+            tokensRemaining: updatedUser.tokens,
             orderId: order._id,
         });
     } catch (error: any) {

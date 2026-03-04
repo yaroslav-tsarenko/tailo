@@ -17,24 +17,30 @@ export async function POST(req: NextRequest) {
 
         const { resumeData, jobDescription, tokensToSpend = 100 } = await req.json();
 
+        const spendAmount = Number(tokensToSpend);
+        if (!Number.isFinite(spendAmount) || spendAmount <= 0)
+            return NextResponse.json({ message: "Invalid token amount" }, { status: 400 });
+
         const dbUser = await User.findById(user.sub);
         if (!dbUser)
             return NextResponse.json({ message: "User not found" }, { status: 404 });
 
-        if (dbUser.tokens < tokensToSpend)
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: dbUser._id, tokens: { $gte: spendAmount } },
+            { $inc: { tokens: -spendAmount } },
+            { new: true }
+        );
+
+        if (!updatedUser)
             return NextResponse.json(
                 { message: "Not enough tokens" },
                 { status: 402 }
             );
 
-        // 💳 Deduct tokens
-        dbUser.tokens -= tokensToSpend;
-        await dbUser.save();
-
         await Transaction.create({
             userId: dbUser._id,
             email: dbUser.email,
-            amount: tokensToSpend,
+            amount: spendAmount,
             type: "spend",
             description: "Resume Match Check (AI-only)",
             createdAt: new Date(),
@@ -94,7 +100,7 @@ ${jobDescription}
             softSkillsMatch: result.softSkillsMatch || 0,
             semanticMatch: result.semanticMatch || 0,
             missingKeywords: result.missingKeywords || [],
-            tokensRemaining: dbUser.tokens,
+            tokensRemaining: updatedUser.tokens,
         });
     } catch (err: any) {
         console.error("❌ Error checking match:", err);
