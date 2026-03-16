@@ -7,15 +7,13 @@ const openai = new OpenAI({ apiKey: ENV.OPENAI_API_KEY });
 
 export const aiService = {
     async processPrompt(userId: string, email: string, prompt: string) {
-        const user = await User.findById(userId);
-        if (!user) throw new Error("UserNotFound");
-
         const cost = parseInt(ENV.AI_COST_PER_REQUEST || "30", 10);
-        if (user.tokens < cost) throw new Error("InsufficientTokens");
-
-        // списуємо токени
-        user.tokens -= cost;
-        await user.save();
+        const user = await User.findOneAndUpdate(
+            { _id: userId, tokens: { $gte: cost } },
+            { $inc: { tokens: -cost } },
+            { new: true }
+        );
+        if (!user) throw new Error("InsufficientTokens");
 
         // GPT-запит
         let gptResponse: string;

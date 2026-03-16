@@ -5,13 +5,13 @@ import { sendEmail } from "@/backend/utils/sendEmail";
 
 export const upcService = {
     async processUPCOrder(userId: string, email: string, prompt: string, response: string) {
-        const user = await User.findById(userId);
-        if (!user) throw new Error("User not found");
         const cost = 30;
-        if (user.tokens < cost) throw new Error("Insufficient tokens");
-
-        user.tokens -= cost;
-        await user.save();
+        const user = await User.findOneAndUpdate(
+            { _id: userId, tokens: { $gte: cost } },
+            { $inc: { tokens: -cost } },
+            { new: true }
+        );
+        if (!user) throw new Error("Insufficient tokens");
 
         // Create transaction for spending tokens
         await Transaction.create({
